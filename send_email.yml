@@ -1,0 +1,26 @@
+name: Send Email Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Send Email via SMTP
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "Email from GitHub Actions"
+          body: "Hello, this is an automated email sent via a GitHub Actions workflow using Gmail's SMTP server!"
+          to: recipient@example.com
+          from: sender@example.com
+          secure: true
